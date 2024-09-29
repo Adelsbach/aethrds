@@ -1,0 +1,71 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt tss_create 3
+.Os
+.Sh NAME
+.Nm tss_create
+.Nd create a thread specific data key
+.Sh SYNOPSIS
+.Lb threads
+.In threads.h
+.Vt typedef void (*tss_dtor_t)(void*);
+.Ft int
+.Fn tss_create "tss_t *key" "tss_dtor_t dtor"
+.Sh DESCRIPTION
+The function
+.Fn tss_create
+will create a thread-specific data
+.Fa key
+which is visible to all threads in the process. 
+.Pp
+The data is by default initialized as
+.Dv NULL 
+for all active threads. Any new thread that is being created will have
+it's value also initialized as 
+.Dv NULL .
+.Pp
+An optional destructor
+.Fa dtor
+can be specified which will called at the exit of thread if the
+thread-specific data is not
+.Dv NULL .
+The order of the destructors being called is arbitrary.
+.Sh RETURN VALUES
+Upon success
+.Fn tss_create
+returns 
+.Va thrd_success , 
+otherwise 
+.Va thrd_error
+will be returned. 
+.Sh SEE ALSO
+.Xr tss_get 3
+.Xr tss_set 3
+.Xr tss_delete 3
+.Sh HISTORY
+The
+.Fn tss_create
+function first appeared in the C11 standard ISO/IEC 9899:2011.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>
+ 

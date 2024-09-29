@@ -1,0 +1,75 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt mtx_trylock 3
+.Os
+.Sh NAME
+.Nm mtx_trylock
+.Nd attempt to acquire a mutex
+.Sh SYNOPSIS
+.Lb threads
+.In threads.h
+.Ft int
+.Fn mtx_trylock "mtx_t *mtx"
+.Sh DESCRIPTION
+The function
+.Fn mtx_trylock
+will attempt to acquire a mutex
+.Fa mtx
+if it has not been acquired already by an other thread.
+.Pp
+If the mutex is already held by the current thread and locking
+recursion was specified in
+.Xr mtx_init 3
+an additional instance of the mutex will be acquired in the current thread.
+In this case to unlock the mutex
+.Xr mtx_unlock 3
+must be called an equal number of times as
+.Fn mtx_trylock ,
+.Xr mtx_lock 3 or
+.Xr mtx_timedlock 3
+have been called from the same thread on the same mutex,
+in order to unlock the mutex for other threads.
+.Sh RETURN VALUES
+Upon success
+.Fn mtx_trylock
+will return 
+.Va thrd_success
+if the mutex has been acquired or
+.Va thrd_busy
+if the mutex is being held by an other thread.
+In case of error
+.Va thrd_error
+will be returned.
+.Sh SEE ALSO
+.Xr mtx_init 3
+.Xr mtx_destroy 3
+.Xr mtx_unlock 3
+.Xr mtx_lock 3
+.Xr mtx_timedlock 3
+.Sh HISTORY
+The
+.Fn mtx_trylock
+function first appeared in the C11 standard ISO/IEC 9899:2011.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>
+ 

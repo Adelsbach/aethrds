@@ -1,0 +1,67 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt thrd_exit 3
+.Os
+.Sh NAME
+.Nm thrd_exit
+.Nd terminate a thread
+.Sh SYNOPSIS
+.Lb threads
+.In threads.h
+.Ft void
+.Fn thrd_exit "int code"
+.Sh DESCRIPTION
+The function
+.Fn thrd_exit
+will terminate the current thread with an arbitrary exit code
+.Fa code
+that any waiting threads can retrieve using
+.Xr thrd_join 3 .
+.Pp
+The thread will call any destructors for thread-local storage that have been
+set using
+.Xr tss_create 3
+whilst blocking signals.
+.Pp
+If the subroutine of a thread returns
+.Fn thrd_exit
+will be implicitly called and the status code will be set to the return value
+of the thread function.
+.Sh RETURN VALUES
+The function
+.Fn thrd_exit
+does not return.
+.Sh SEE ALSO
+.Xr thrd_create 3
+.Xr thrd_sleep 3
+.Xr thrd_yield 3
+.Xr thrd_equal 3
+.Xr thrd_detach 3
+.Xr thrd_current 3
+.Xr thrd_join 3
+.Sh HISTORY
+The
+.Fn thrd_exit
+function first appeared in the C11 standard ISO/IEC 9899:2011.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>

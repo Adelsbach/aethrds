@@ -1,0 +1,56 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt smtx_destroy 3
+.Os
+.Sh NAME
+.Nm smtx_destroy
+.Nd destroy a spinlock
+.Sh SYNOPSIS
+.Lb threads
+.In threadse.h
+.Ft int
+.Fn smtx_destroy "smtx_t *s"
+.Sh DESCRIPTION
+The function
+.Fn smtx_destroy
+will destroy the given spinlock
+.Fa s .
+.Sh RETURN VALUES
+Upon success
+.Fn smtx_destroy
+will return 
+.Va thrd_success .
+In case of error
+.Va thrd_error
+will be returned.
+.Sh SEE ALSO
+.Xr smtx_init 3
+.Xr smtx_lock 3
+.Xr smtx_unlock 3
+.Xr smtx_trylock 3
+.Sh HISTORY
+The
+.Fn smtx_destroy
+function first appeared in the Adelsbach Enhanced Threading Library.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>

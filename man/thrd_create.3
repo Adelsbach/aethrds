@@ -1,0 +1,81 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt thrd_create 3
+.Os
+.Sh NAME
+.Nm thrd_create
+.Nd create a thread
+.Sh SYNOPSIS
+.Lb threads
+.In threads.h
+.Vt typedef int (*thrd_start_t)(void*);
+.Ft int
+.Fn thrd_create "thrd_t *thrd" "thrd_start_t fn" "void *arg"
+.Sh DESCRIPTION
+The function
+.Fn thrd_create
+will create a thread in the current process and store it's identifier in
+.Fa thrd .
+The thread will execute the given start callback function
+.Fa fn
+and pass it the given opaque pointer
+.Fa arg .
+.Pp
+The thread will continue executing concurrently until either the given
+function
+.Fa fn
+returns or
+.Xr thrd_exit 3
+has been called from within the thread.
+.Pp
+Any thread-local variables that have been created with
+.Xr tss_create 3
+will be initialized to
+.Dv NULL
+for the new thread.
+.Pp
+A thread will inherit the signal mask of it's process.
+.Sh RETURN VALUES
+The function
+.Fn thrd_create
+will return
+.Va thrd_success
+on success, if there is insufficient memory
+.Va thrd_nomem
+will be returned. In any other error case
+.Va thrd_error
+will be returned.
+.Sh SEE ALSO
+.Xr thrd_exit 3
+.Xr thrd_sleep 3
+.Xr thrd_yield 3
+.Xr thrd_equal 3
+.Xr thrd_detach 3
+.Xr thrd_current 3
+.Xr thrd_join 3
+.Sh HISTORY
+The
+.Fn thrd_create
+function first appeared in the C11 standard ISO/IEC 9899:2011.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>

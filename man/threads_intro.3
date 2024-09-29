@@ -1,0 +1,130 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt threads_intro 3
+.Os
+.Sh NAME
+.Nm threads_into
+.Nd introduction to the Adelsbach Enhanced Threading Library
+.Sh SYNOPSIS
+.Lb threads
+.In threads.h 
+.In threadse.h
+.Sh DESCRIPTION
+The Adelsbach Enhanced Threading Library aims to implement
+a conform C11 (ISO/IEC 9899:2011)
+threading interface on top the standard POSIX threading API
+(IEEE Std 1003.1c-1995). It furthermore implements extensions to the former
+for spinlocks, read/write locks and thread barriers.
+.Pp
+The C11 standard functions are declared in the
+.Em threads.h
+header file, whereas all extensions are declared in the
+.Em threadse.h 
+header file.
+.Pp
+The following functionality is supported:
+.Bl -tag -width Ds
+.It Threading
+These implement the standard threading functions.
+.Pp
+.Xr thrd_create 3
+.Xr thrd_exit 3
+.Xr thrd_current 3
+.Xr thrd_detach 3
+.Xr thrd_join 3
+.Xr thrd_equal 3
+.Xr thrd_sleep 3
+.Xr thrd_yield 3
+.It Mutexes
+Mutexes will stall a thread until an exclusive 
+lock on the mutex can be acquired.
+.Pp
+.Xr mtx_init 3
+.Xr mtx_destroy 3
+.Xr mtx_lock 3
+.Xr mtx_timedlock 3
+.Xr mtx_trylock 3
+.Xr mtx_unlock 3
+.It Condition variables
+Condition variables will stall a single or multiple threads until a 
+condition has been send out by an other thread. By comparison to a mutex
+multiple threads can continue execution after the condition has been given.
+.Pp
+.Xr cnd_init 3
+.Xr cnd_destroy 3
+.Xr cnd_broadcast 3
+.Xr cnd_signal 3
+.Xr cnd_wait 3
+.Xr cnd_timedwait 3
+.It Thread-local storage
+Thread-local storage allocates global variables with data specific to
+each thread.
+.Pp
+.Xr tss_create 3
+.Xr tss_delete 3
+.Xr tss_get 3
+.Xr tss_set 3
+.It Call once
+This synchronization primitive allows only a single thread 
+to execute a specified function exactly once.
+.Pp
+.Xr call_once 3
+.It Read/Write Locks
+Read/Write locks allow synchronization for read/write operations. Threads can 
+hold either read or write locks, multiple read locks can be held by multiple
+threads but only one write lock can be held at a time. The write lock can
+only be acquired if no read locks are acquired, the read lock can only
+be acquired once there is no write lock acquired.
+.Pp
+.Xr rwmtx_init 3
+.Xr rwmtx_destroy 3
+.Xr rwmtx_rdlock 3
+.Xr rwmtx_wrlock 3
+.Xr rwmtx_tryrdlock 3
+.Xr rwmtx_trywrlock 3
+.Xr rwmtx_timedrdlock 3
+.Xr rwmtx_timedwrlock 3
+.Xr rwmtx_unlock 3
+.It Spinlocks
+Spinlocks are fast mutexes, that loop on an atomic variable rather than
+yielding the thread. They are more lightweight than a normal mutex and are
+suitable for short synchronizations that will not require much wait.
+.Pp
+.Xr smtx_init 3
+.Xr smtx_destroy 3
+.Xr smtx_lock 3
+.Xr smtx_unlock 3
+.Xr smtx_trylock 3
+.It Barriers
+Barriers allow for synchronization of thread groups. A barrier will stop all
+threads upon entering the barrier until a specified amount of threads is
+waiting, after which execution continues.
+.Pp
+.Xr bar_init 3
+.Xr bar_destroy 3
+.Xr bar_wait 3
+.El
+.Sh SEE ALSO
+.Xr pthreads 3
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>

@@ -1,0 +1,60 @@
+.\" Copyright 2024, Adelsbach UG (haftungsbeschraenkt)
+.\" Copyright 2014-2024, Jan Adelsbach <jan@jadelsbach.de>
+.\"
+.\" Permission is hereby granted, free of charge, to any person obtaining 
+.\" a copy of this software and associated documentation files
+.\" (the “Software”), 
+.\" to deal in the Software without restriction, including without limitation 
+.\" the rights to use, copy, modify, merge, publish, distribute, sublicense, 
+.\" and/or sell copies of the Software, and to permit persons to whom the 
+.\" Software is furnished to do so, subject to the following conditions:
+.\" 
+.\" The above copyright notice and this permission notice shall be included 
+.\" in all copies or substantial portions of the Software.
+.\"
+.\" THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS 
+.\" OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+.\" FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
+.\" AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER 
+.\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+.\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+.\" DEALINGS IN THE SOFTWARE.
+.Dd $Mdocdate: May 9 2020 $
+.Dt bar_wait 3
+.Os
+.Sh NAME
+.Nm bar_wait
+.Nd wait at thread barrier
+.Sh SYNOPSIS
+.Lb threads
+.In threadse.h
+.Ft int
+.Fn bar_wait "bar_t *barrier"
+.Sh DESCRIPTION
+The function
+.Fn bar_wait
+will stall stop the current thread and wait until the correct amount of
+threads are waiting at the given thread 
+.Fa barrier ,
+as specified at the initialization of the barrier in
+.Xr bar_init 3 .
+.Sh RETURN VALUES
+Upon success
+.Fn bar_wait
+will return 
+.Va thrd_success 
+for exactly one thread and
+.Va thrd_busy
+for all others.
+In case of an error
+.Va thrd_error 
+will be returned.
+.Sh SEE ALSO
+.Xr bar_init 3
+.Xr bar_destroy 3
+.Sh HISTORY
+The
+.Fn bar_wait
+function first appeared in the Adelsbach Enhanced Threading Library.
+.Sh AUTHORS
+Jan Adelsbach <jan@jadelsbach.de>
