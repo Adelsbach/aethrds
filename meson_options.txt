@@ -1,0 +1,3 @@
+option('major_version', type : 'integer', value : 1,    description : 'Major version of the thrds library')
+option('minor_version', type : 'integer', value : 0,    description : 'Minor version of the thrds library')
+option('debug_version', type : 'boolean', value : true, description : 'Also build debugging symbol library')
