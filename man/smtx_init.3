@@ -19,7 +19,7 @@
 .\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
 .\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 .\" DEALINGS IN THE SOFTWARE.
-.Dd $Mdocdate: May 9 2020 $
+.Dd $Mdocdate: Mar 29 2025 $
 .Dt smtx_init 3
 .Os
 .Sh NAME
@@ -43,7 +43,7 @@ argument can be either of
 .It Em smtx_private
 the spinlock is not shared among child processes.
 .It Em smtx_shared
-the spinlock is shared among child processes. 
+the spinlock is shared among child processes. This is not supported on MacOS.
 .El
 .Sh RETURN VALUES
 Upon success

@@ -50,7 +50,11 @@ enum smtx_type {
   smtx_shared  = 2
 };
 
+#if defined(__DARWIN__) || defined(__APPLE__)
+typedef int smtx_t;
+#else
 typedef pthread_spinlock_t smtx_t;
+#endif
 
 int  smtx_init(smtx_t *mtx, int type);
 int  smtx_destroy(smtx_t *mtx);
@@ -63,7 +67,17 @@ enum bar_type {
   bar_shared  = 2
 };
 
+#if defined(__DARWIN__) || defined(__APPLE__)
+typedef struct _bar_t {
+  pthread_mutex_t mtx;
+  pthread_cond_t cnd;
+  int count;
+  int left;
+  int serial;
+} bar_t;
+#else
 typedef pthread_barrier_t bar_t;
+#endif
 
 int  bar_init(bar_t *barrier, int type, unsigned count);
 int  bar_destroy(bar_t *barrier);

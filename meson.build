@@ -7,7 +7,6 @@ SRCS=[
 'src/mtx_init.c',
 'src/mtx_destroy.c',
 'src/mtx_lock.c',
-'src/mtx_timedlock.c',
 'src/mtx_trylock.c',
 'src/mtx_unlock.c',
 'src/call_once.c',
@@ -28,24 +27,53 @@ SRCS=[
 'src/thrd_join.c',
 'src/thrd_equal.c',
 'src/thrd_sleep.c',
-'src/thrd_yield.c',
-'src/smtx_init.c',
-'src/smtx_destroy.c',
-'src/smtx_lock.c',
-'src/smtx_unlock.c',
-'src/smtx_trylock.c',
 'src/rwmtx_init.c',
 'src/rwmtx_destroy.c',
 'src/rwmtx_rdlock.c',
 'src/rwmtx_wrlock.c',
 'src/rwmtx_tryrdlock.c',
 'src/rwmtx_trywrlock.c',
+'src/rwmtx_unlock.c',
+]
+
+# For standard pthread implementations
+POSIX_SRCS=[
+'src/mtx_timedlock.c',
+
+'src/thrd_yield.c',
+
 'src/rwmtx_timedrdlock.c',
 'src/rwmtx_timedwrlock.c',
-'src/rwmtx_unlock.c',
+
+'src/smtx_init.c',
+'src/smtx_destroy.c',
+'src/smtx_lock.c',
+'src/smtx_unlock.c',
+'src/smtx_trylock.c',
+
 'src/bar_init.c',
 'src/bar_destroy.c',
-'src/bar_wait.c',
+'src/bar_wait.c'
+]
+
+# For Apple
+MACOS_SRCS=[
+'src/macos/mtx_timedlock.c',
+
+'src/macos/thrd_yield.c',
+
+'src/macos/rwmtx_timedrdlock.c',
+'src/macos/rwmtx_timedwrlock.c',
+
+'src/macos/smtx_init.c',
+'src/macos/smtx_destroy.c',
+'src/macos/smtx_lock.c',
+'src/macos/smtx_unlock.c',
+'src/macos/smtx_trylock.c',
+
+'src/macos/bar_init.c',
+'src/macos/bar_destroy.c',
+'src/macos/bar_wait.c'
 ]
 
 MANPAGES=[
@@ -92,6 +120,12 @@ MANPAGES=[
 'man/bar_destroy.3',
 'man/bar_wait.3',
 ]
+
+if target_machine.system() == 'darwin'
+  SRCS += MACOS_SRCS
+else
+  SRCS += POSIX_SRCS
+endif
 
 install_man(MANPAGES)
 
