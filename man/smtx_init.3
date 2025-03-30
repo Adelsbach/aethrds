@@ -19,7 +19,7 @@
 .\" LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
 .\" FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 .\" DEALINGS IN THE SOFTWARE.
-.Dd $Mdocdate: Mar 29 2025 $
+.Dd $Mdocdate: Mar 30 2025 $
 .Dt smtx_init 3
 .Os
 .Sh NAME
@@ -43,7 +43,8 @@ argument can be either of
 .It Em smtx_private
 the spinlock is not shared among child processes.
 .It Em smtx_shared
-the spinlock is shared among child processes. This is not supported on MacOS.
+the spinlock is shared among child processes. 
+This is not supported on MacOS.
 .El
 .Sh RETURN VALUES
 Upon success
@@ -61,6 +62,8 @@ will be returned.
 .Sh HISTORY
 The
 .Fn smtx_init
-function first appeared in the Adelsbach Enhanced Threading Library.
+function first appeared in the Adelsbach Enhanced Threading Library. 
+MacOS support was added in version 1.0.1 using an implementation with 
+atomic variables.
 .Sh AUTHORS
 Jan Adelsbach <jan@jadelsbach.de>
