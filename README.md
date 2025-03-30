@@ -8,6 +8,10 @@ threading API.
 In addition to the standard functions extensions are provided for further features
 such as barriers, read/write mutexes and spinlocks.
 
+### Supported Systems
+In general aethrds should work on all standard POSIX systems.
+It has been tested on Linux, FreeBSD and MacOS.
+
 ### Compile using meson
 Using meson, setup a build directory using
 ```
